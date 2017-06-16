@@ -1,0 +1,32 @@
+[a,b] = audioread('goto.mp3');
+[c,d] = audioread('google1.mp3');
+c = c(:,1);
+c = resample(c,b,d);
+d = b;
+l1 = size(a);
+l1 = l1(1);
+l2 = size(c);
+l2 = l2(1);
+p = zeros(l1+l2+24000,1);
+p(1:l1) = a;
+p(l1+1+24000:l2+l1+24000) = c;
+x1 = resample(x1,d,y1);
+x1 = x1(:,1);
+[x2,y2] = audioread('noise3.mp3');
+x2 = x2(:,1);
+figure;
+plot(c);
+x2 = resample(x2,d,y2);
+l = l1+l2+24000;
+%p = p* 3+ x1(1:l)*0.8 + x2(1:l)*0.8;
+%soundsc(p,d);
+numcep = 13;
+nbands = 20;
+wintime = 0.016;
+hoptime = 0.008;
+c = p;
+[c,~] = mfcclist(c,d,numcep,nbands,wintime,hoptime);
+soundsc(c,d);
+
+[x1,y1] = audioread('noise2.mp3');
+
